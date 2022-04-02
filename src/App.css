@@ -36,3 +36,92 @@
     transform: rotate(360deg);
   }
 }
+.levelEditor * {
+  box-sizing: border-box;
+}
+
+.selected {
+  border: 5px solid black;
+  margin: 0px;
+}
+
+.navMenu {
+  height: 1vh;
+}
+
+.levelEditor {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 99vh;
+  width: 100vw;
+}
+
+.levelEditor canvas {
+  border: 1px solid black;
+}
+
+.tilesetForm {
+  margin: auto;
+}
+
+.tilesetForm td {
+  text-align: left;
+  vertical-align: middle;
+}
+
+.tilesetForm tr > td:first-child {
+  font-weight: bolder;
+}
+
+.tilesetInterface {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imageSelector {
+  width: 200px;
+  height: 200px;
+}
+
+.tile {
+  background-color: gray;
+  color: white;
+  width: 500px;
+  margin: 10px auto;
+  padding: 10px;
+}
+
+a, a:active, a:visited {
+  padding: 5px;
+  margin: 0px 2px;
+  color: white;
+  background-color: gray;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+a.active {
+  background-color: black;
+}
+
+.tiles img {
+  width: 64px;
+  height: 64px;
+  margin: 0px 2px;
+  cursor: pointer;
+}
+
+.tiles img:hover {
+  border: 5px solid red;
+  margin: 0px;
+}
+
+.level {
+  overflow: scroll;
+  width: 100vw;
+  flex-grow: 1;
+}

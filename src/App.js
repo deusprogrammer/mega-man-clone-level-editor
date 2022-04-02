@@ -1,25 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import {Route, Routes, BrowserRouter, Link, useLocation} from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Level from './routes/Level';
+import TileSet from './routes/TileSet';
+
+const App = () => {
+    console.log("LOCATION: " + window.location.pathname);
+    return (
+        <div className="App">
+            <BrowserRouter>
+                <div className="navMenu">
+                    <Link to="/tilesets">Tileset Editor</Link><Link to="/levels">Level Editor</Link>
+                </div>
+                <Routes>
+                    <Route path="/tilesets" element={<TileSet />} />
+                    <Route path="/levels" element={<Level />} />
+                </Routes>
+            </BrowserRouter>
+        </div>
+    );
 }
 
 export default App;
