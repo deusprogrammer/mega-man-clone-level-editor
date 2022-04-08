@@ -32,9 +32,12 @@ const Level = ({tileSet}) => {
         }
 
         canvas.current.onmouseup = (event) => {
+            let size = BLOCK_SIZE * uiScale;
             if (uiMode === "pan") {
                 offset.x += tempOffset.x;
                 offset.y += tempOffset.y;
+                offset.x = Math.floor(offset.x/size) * size;
+                offset.y = Math.floor(offset.y/size) * size
                 tempOffset = {x: 0, y: 0};
             }
         }
@@ -74,7 +77,7 @@ const Level = ({tileSet}) => {
         }
 
         tileLocations.forEach((tileLocation) => {
-            let position = {x: (tileLocation.x * size)- tempOffset.x - offset.x, y: (tileLocation.y * size) - tempOffset.y - offset.y};
+            let position = {x: (tileLocation.x * size) - tempOffset.x - offset.x, y: (tileLocation.y * size) - tempOffset.y - offset.y};
             if (position.x + size < 0 ||
                 position.x - size >= canvas.clientWidth ||
                 position.y + size < 0 ||
@@ -88,8 +91,8 @@ const Level = ({tileSet}) => {
         // Preview the new tile
         if (tileImage && uiMode === "edit") {
             let image = document.getElementById(tileImage);
-            let gridX = Math.floor(offsetX/size) * size - ((offset.x % size) * Math.sign(offset.x));
-            let gridY = Math.floor(offsetY/size) * size - ((offset.y % size) * Math.sign(offset.y));
+            let gridX = Math.floor(offsetX/size) * size;
+            let gridY = Math.floor(offsetY/size) * size;
             ctx.drawImage(image, gridX, gridY, size, size);
         }
     }
@@ -111,6 +114,7 @@ const Level = ({tileSet}) => {
 
     const selectTile = (tile, id) => {
         setSelectedTile(tile);
+        setEditorMode("edit");
         tileImage = id;
     }
 
