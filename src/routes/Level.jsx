@@ -36,16 +36,21 @@ const Level = ({tileSet}) => {
             if (uiMode === "pan") {
                 offset.x += tempOffset.x;
                 offset.y += tempOffset.y;
-                offset.x = Math.floor(offset.x/size) * size;
-                offset.y = Math.floor(offset.y/size) * size
+                alignGrid();
                 tempOffset = {x: 0, y: 0};
             }
         }
     }, []);
 
+    const alignGrid = () => {
+        let size = BLOCK_SIZE * uiScale;
+        offset.x = Math.floor(offset.x/size) * size;
+        offset.y = Math.floor(offset.y/size) * size
+    }
+
     const redrawPreview = (offsetX, offsetY, size, ctx) => {  
+        let canvas = document.getElementById("le-canvas");
         if (!ctx) {
-            let canvas = document.getElementById("le-canvas");
             ctx = canvas.getContext('2d');
         }
 
@@ -98,7 +103,8 @@ const Level = ({tileSet}) => {
     }
 
     const setTile = ({offsetX, offsetY}) => {
-        let size = BLOCK_SIZE;
+        let size = BLOCK_SIZE * uiScale;
+        console.log("SIZE: " + size);
 
         let gridX = Math.floor((offsetX + offset.x)/size);
         let gridY = Math.floor((offsetY + offset.y)/size);
@@ -129,6 +135,7 @@ const Level = ({tileSet}) => {
         uiScale *= factor;
 
         redrawPreview(offset.x, offset.y, uiScale * BLOCK_SIZE);
+        alignGrid();
     }
 
     const setEditorMode = (mode) => {
@@ -145,9 +152,9 @@ const Level = ({tileSet}) => {
                 <div className="tiles">
                     <button style={{color: "white", backgroundColor: mode === "edit" ? "blue" : "grey"}} onClick={() => {setEditorMode("edit")}}>Edit</button>
                     <button style={{color: "white", backgroundColor: mode === "pan" ? "blue" : "grey"}} onClick={() => {setEditorMode("pan")}}>Pan</button>
-                    {/* <button onClick={() => {setEditorZoom(1)}}>Zoom In</button>
+                    <button onClick={() => {setEditorZoom(1)}}>Zoom In</button>
                     <span>{scale * 100}%</span>
-                    <button onClick={() => {setEditorZoom(-1)}}>Zoom Out</button> */}
+                    <button onClick={() => {setEditorZoom(-1)}}>Zoom Out</button>
                 </div>
                 <div className="tiles">
                     {tileSet.map((tile, index) => {
@@ -157,7 +164,7 @@ const Level = ({tileSet}) => {
                     })}
                 </div>
                 <div className="level">
-                    <canvas id="le-canvas" width={1000} height={600} ref={canvas} />
+                    <canvas id="le-canvas" width={window.innerWidth * 0.95} height={window.innerHeight * 0.80} ref={canvas} />
                 </div>
             </div>
         </div>
