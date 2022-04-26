@@ -112,8 +112,8 @@ const Level = ({tileSet}) => {
 
         if (buttons === 1 && uiMode === "pan") {
             let delta = {x: startDrag.x - clientX, y: startDrag.y - clientY};
-            tempOffset.x = delta.x;
-            tempOffset.y = delta.y;
+            tempOffset.x = Math.max(delta.x, 0);
+            tempOffset.y = Math.max(delta.y, 0);
         }
 
         tileLocations.forEach((tileLocation) => {
@@ -228,11 +228,11 @@ const Level = ({tileSet}) => {
                 </div>
                 <div className="tiles">
                     <button onClick={() => {download()}}>Download Level</button>
-                    {/* <button style={{color: "white", backgroundColor: mode === "edit" ? "blue" : "grey"}} onClick={() => {setEditorMode("edit")}}>Edit</button>
-                    <button style={{color: "white", backgroundColor: mode === "pan" ? "blue" : "grey"}} onClick={() => {setEditorMode("pan")}}>Pan</button>
-                    <button onClick={() => {setEditorZoom(1)}}>Zoom In</button> */}
+                    <button title="Add tiles to level." style={{color: "white", backgroundColor: mode === "edit" ? "blue" : "grey"}} onClick={() => {setEditorMode("edit")}}>Edit</button>
+                    <button title="Pan level to see more.  You can also hold space to pan." style={{color: "white", backgroundColor: mode === "pan" ? "blue" : "grey"}} onClick={() => {setEditorMode("pan")}}>Pan</button>
+                    <button title="Zoom in on level.  You can also use the scroll wheel." onClick={() => {setEditorZoom(10)}}>Zoom In</button>
                     <span>Zoom: {Math.trunc(scale * 100)}%</span>
-                    {/* <button onClick={() => {setEditorZoom(-1)}}>Zoom Out</button> */}
+                    <button title="Zoom out on level.  You can also use the scroll wheel." onClick={() => {setEditorZoom(-10)}}>Zoom Out</button>
                 </div>
                 <div className="tiles">
                     {tileSet.map((tile, index) => {
