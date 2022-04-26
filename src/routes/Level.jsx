@@ -211,10 +211,13 @@ const Level = ({tileSet}) => {
             }
         });
 
-        const matrix = new Array(maxY - minY + 1).fill("").map(() => new Array(maxX - minX + 1).fill(""));
+        const matrix = new Array(Math.max(maxY + 1, 100)).fill("").map(() => new Array(Math.max(maxX + 1, 100)).fill(""));
         tileLocations.forEach((tileLocation) => {
             console.log("TILE: " + JSON.stringify(tileLocation, null, 5));
-            matrix[parseInt(tileLocation.y) - minY][parseInt(tileLocation.x) - minX] = tileLocation.name; 
+            if (!tileLocation.x || !tileLocation.y) {
+                return;
+            }
+            matrix[parseInt(tileLocation.y)][parseInt(tileLocation.x)] = tileLocation.name; 
         });
 
         console.log(JSON.stringify(matrix, null, 5));
